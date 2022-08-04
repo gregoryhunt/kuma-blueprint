@@ -1,6 +1,6 @@
 template "control_config" {
   source      = "./config/kuma_cp.tmpl"
-  destination = "${data("kuma_cp")}/kuma_cp.tmpl"
+  destination = "${data("kuma_config")}/kuma_cp.tmpl"
 }
 
 container "kuma_cp" {
@@ -24,8 +24,55 @@ container "kuma_cp" {
   }
 
   volume {
-    source      = data("kuma_cp")
+    source      = data("kuma_config")
     destination = "/etc/kuma"
   }
 
+  health_check {
+    timeout = "60s"
+    http    = "http://localhost:5681"
+  }
+
+}
+
+sidecar "tools" {
+  target = "container.kuma_cp"
+
+  image {
+    name = "shipyardrun/tools:v0.7.0"
+  }
+
+  command = ["tail", "-f", "/dev/null"]
+
+  volume {
+    source      = data("kuma_config")
+    destination = "/etc/kuma"
+  }
+}
+
+template "bootstrap" {
+  source = <<-EOF
+  #!/bin/bash
+
+  curl -s http://localhost:5681/global-secrets/admin-user-token | jq -r .data | base64 -d > /etc/kuma/admin.token
+  EOF
+
+  destination = "${data("kuma_config")}/bootstrap.sh"
+}
+
+exec_remote "bootstrap" {
+  target = "sidecar.tools"
+
+  cmd = "sh"
+  args = [
+    "/etc/kuma/bootstrap.sh"
+  ]
+}
+
+output "KUMA_TOKEN" {
+  value = "$(cat ${data("kuma_config")}/admin.token)"
+}
+
+output "KUMA_TOKEN_LOCATION" {
+  value = "${data("kuma_config")}/admin.token"
 }
