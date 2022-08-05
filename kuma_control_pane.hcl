@@ -1,6 +1,6 @@
 template "control_config" {
   source      = "./config/kuma_cp.tmpl"
-  destination = "${data("kuma_config")}/kuma_cp.tmpl"
+  destination = "${data("kuma_config")}/kuma-cp.defaults.yaml"
 }
 
 container "kuma_cp" {
@@ -54,7 +54,12 @@ template "bootstrap" {
   source = <<-EOF
   #!/bin/bash
 
-  curl -s http://localhost:5681/global-secrets/admin-user-token | jq -r .data | base64 -d > /etc/kuma/admin.token
+  until curl --silent --fail http://localhost:5681/global-secrets/admin-user-token; do
+    echo "Waiting for admin token generation"
+    sleep 1
+  done
+
+  curl -v http://localhost:5681/global-secrets/admin-user-token | jq -r .data | base64 -d > /etc/kuma/admin.token
   EOF
 
   destination = "${data("kuma_config")}/bootstrap.sh"
