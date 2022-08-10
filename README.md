@@ -35,3 +35,9 @@ Name of the network that the Cuma control plane is attached to
 required: false
 default: kumahq/kuma-cp:1.7.1 
 Version of the Kuma control plan to run
+
+### kuma_start_gui
+
+required: false
+default: false 
+Start the Kuma GUI
