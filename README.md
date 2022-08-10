@@ -41,3 +41,13 @@ Version of the Kuma control plan to run
 required: false
 default: false 
 Start the Kuma GUI
+
+## Outputs
+
+## KUMA_TOKEN_LOCATION
+
+Location of the Kuma control panel admin token
+
+## KUMA_TOKEN
+
+Kuma control panel admin token
