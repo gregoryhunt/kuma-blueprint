@@ -36,6 +36,12 @@ required: false
 default: kumahq/kuma-cp:1.7.1 
 Version of the Kuma control plan to run
 
+### kuma_start_gui
+
+required: false
+default: false 
+Start the Kuma GUI
+
 ## Outputs
 
 ## KUMA_TOKEN_LOCATION
