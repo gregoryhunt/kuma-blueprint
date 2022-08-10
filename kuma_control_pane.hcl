@@ -49,7 +49,7 @@ container "kuma_cp" {
     local           = 5681
     remote          = 5681
     host            = 5681
-    open_in_browser = var.kuma_start_gui ? null : "/gui"
+    #open_in_browser = var.kuma_start_gui ? "/gui" : {}
   }
 
   volume {
