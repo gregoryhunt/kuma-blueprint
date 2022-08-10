@@ -35,3 +35,13 @@ Name of the network that the Cuma control plane is attached to
 required: false
 default: kumahq/kuma-cp:1.7.1 
 Version of the Kuma control plan to run
+
+## Outputs
+
+## KUMA_TOKEN_LOCATION
+
+Location of the Kuma control panel admin token
+
+## KUMA_TOKEN
+
+Kuma control panel admin token

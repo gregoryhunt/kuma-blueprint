@@ -9,3 +9,13 @@ Scenario: Simple Control Pane
     | name                      | type      |
     | kuma_cp                   | container |
   And a HTTP call to "http://kuma-cp.container.shipyard.run:5681" should result in status 200
+  When I run the script
+    ```
+    #!/bin/bash
+    if [ -s "$HOME/.shipyard/data/kuma_config/admin.token" ]; then
+      exit 0
+    else
+      echo "Admin token does not exist, or is empty"
+      exit 1
+    fi
+    ```
