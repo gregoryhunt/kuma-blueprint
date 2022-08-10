@@ -9,6 +9,6 @@ variable "kuma_cp_version" {
 }
 
 variable "kuma_start_gui" {
-  default = false
+  default = true
   description = "Start the Kuma GUI"
 }
