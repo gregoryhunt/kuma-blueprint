@@ -4,6 +4,6 @@ variable "kuma_cp_network" {
 }
 
 variable "kuma_cp_version" {
-  default     = "kumahq/kuma-cp:1.7.1"
+  default     = "kumahq/kuma-cp:1.8.0"
   description = "Docker image to use for the Kuma control panel"
 }

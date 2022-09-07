@@ -33,7 +33,7 @@ Name of the network that the Cuma control plane is attached to
 ### kuma_cp_version
 
 required: false
-default: kumahq/kuma-cp:1.7.1 
+default: kumahq/kuma-cp:1.8.0 
 Version of the Kuma control plan to run
 
 ## Outputs
