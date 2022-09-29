@@ -99,16 +99,20 @@ template "bootstrap" {
 
   curl -v http://localhost:5681/global-secrets/admin-user-token | jq -r .data | base64 -d > /etc/kuma/admin.token
 
-echo "apiVersion: kuma.io/v1alpha1
-kind: Mesh
-metadata:
-  name: default
-spec:
-  mtls:
-    enabledBackend: ca-1
-    backends:
+echo "type: Mesh
+name: default
+mtls:
+  enabledBackend: ca-1
+  backends:
     - name: ca-1
-      type: builtin" | kubectl apply -f -
+      type: builtin
+      dpCert:
+        rotation:
+          expiration: 1d
+      conf:
+        caCert:
+          RSAbits: 2048
+          expiration: 1y" | kumactl apply -f -
 
   EOF
 
