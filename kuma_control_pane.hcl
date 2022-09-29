@@ -98,6 +98,18 @@ template "bootstrap" {
   done
 
   curl -v http://localhost:5681/global-secrets/admin-user-token | jq -r .data | base64 -d > /etc/kuma/admin.token
+
+echo "apiVersion: kuma.io/v1alpha1
+kind: Mesh
+metadata:
+  name: default
+spec:
+  mtls:
+    enabledBackend: ca-1
+    backends:
+    - name: ca-1
+      type: builtin" | kubectl apply -f -
+
   EOF
 
   destination = "${data("kuma_config")}/bootstrap.sh"
